@@ -46,7 +46,7 @@ export default function Zenn() {
         </DrawerBody>
       </DrawerContent>
     </Drawer>
-  );
+  )
 
   const Dialog = (
     <AlertDialog isOpen={isDialogOpen} onClose={onCloseDialog} leastDestructiveRef={undefined}>
