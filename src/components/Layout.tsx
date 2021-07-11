@@ -41,7 +41,7 @@ export function Layout({ children, ...props }: Props) {
   );
 
   return (
-    <Flex bg="gray.100" w="100vw" h="100vh">
+    <Flex bg="gray.100" w="100vw">
       <Flex
         as="header"
         position="fixed"

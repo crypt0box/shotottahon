@@ -1,7 +1,10 @@
 import { InferGetStaticPropsType } from 'next';
-import { Flex, Box, Grid, Image, Heading } from '@chakra-ui/react';
+import { Image, useMediaQuery } from '@chakra-ui/react';
 import React from 'react';
 import { db } from 'src/lib/db';
+import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
+import About from 'src/components/About';
+import Books from 'src/components/Books';
 
 type BookProps = {
   id?: string;
@@ -34,35 +37,63 @@ export const getStaticProps = async () => {
 };
 
 export default function HomePage({ books }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const [isBase, isSm, isMd, isLg] = useMediaQuery([
+    '(min-width: 0px)',
+    '(min-width: 430px)',
+    '(min-width: 768px)',
+    '(min-width: 960px)',
+  ]);
+
+  const RenderBooks = (books: BookProps[], start: number, end?: number): ReactJSXElement[] => {
+    const booksJsx: ReactJSXElement[] = [];
+    for (let i = start; i < books.length; i++) {
+      booksJsx.push(
+        <Image
+          key={books[i].id}
+          boxSize="100%"
+          boxShadow="-6px 6px 10px -2px rgb(0 27 68 / 25%), 0 0 3px rgb(0 21 60 / 10%)"
+          objectFit="fill"
+          src={books[i].imageUrl}
+          alt={books[i].title}
+        />
+      );
+      if (i === end) break;
+    }
+    return booksJsx;
+  };
+
+  const about: string[] = [
+    'shotottahonは何かしらの賞を獲ったことがある本をひたすら並べたサイトです',
+    'あなたが手に取ったその本はこの世界の誰かが強く評価した本です',
+    '読書をしたいけど何を読めばいいかわからない\nそんな人の為に作りました',
+  ];
+
+  const RenderContents = (cnt: number) => {
+    const contentsJsx: ReactJSXElement[] = [];
+    for (let i = 0; i < about.length; i++) {
+      const prevCount = i * (cnt + 1);
+      contentsJsx.push(
+        <>
+          <Books>{RenderBooks(books, prevCount, prevCount + cnt)}</Books>
+          <About>{about[i]}</About>
+        </>
+      );
+    }
+    contentsJsx.push(<Books>{RenderBooks(books, (cnt + 1) * about.length)}</Books>);
+    return contentsJsx;
+  };
+
   return (
     <>
-      <Flex justifyContent="center">
-        <Box>
-          <Heading>Hello World!</Heading>
-        </Box>
-      </Flex>
-      <Flex justifyContent="center" px="20px">
-        <Grid
-          templateColumns={{
-            base: 'repeat(2, 1fr)',
-            sm: 'repeat(3, 1fr)',
-            md: 'repeat(4, 1fr)',
-            lg: 'repeat(5, 1fr)',
-          }}
-          gap={6}
-        >
-          {books.map((book) => (
-            <Image
-              key={book.id}
-              boxSize="100%"
-              boxShadow="-6px 6px 10px -2px rgb(0 27 68 / 25%), 0 0 3px rgb(0 21 60 / 10%)"
-              objectFit="fill"
-              src={book.imageUrl}
-              alt={book.title}
-            />
-          ))}
-        </Grid>
-      </Flex>
+      {isLg
+        ? RenderContents(9)
+        : isMd
+        ? RenderContents(7)
+        : isSm
+        ? RenderContents(5)
+        : isBase
+        ? RenderContents(3)
+        : null}
     </>
   );
 }
