@@ -1,6 +1,16 @@
 import { InferGetStaticPropsType } from 'next';
-import { Image, useMediaQuery } from '@chakra-ui/react';
-import React from 'react';
+import {
+  Box,
+  Image,
+  Button,
+  useMediaQuery,
+  AlertDialog,
+  AlertDialogOverlay,
+  AlertDialogContent,
+  AlertDialogBody,
+  AlertDialogFooter,
+} from '@chakra-ui/react';
+import React, { useState } from 'react';
 import { db } from 'src/lib/db';
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 import About from 'src/components/About';
@@ -37,6 +47,8 @@ export const getStaticProps = async () => {
 };
 
 export default function HomePage({ books }: InferGetStaticPropsType<typeof getStaticProps>) {
+  const [selectedBook, setSelectedBook] = useState<string>('');
+
   const [isBase, isSm, isMd, isLg] = useMediaQuery([
     '(min-width: 0px)',
     '(min-width: 430px)',
@@ -44,18 +56,43 @@ export default function HomePage({ books }: InferGetStaticPropsType<typeof getSt
     '(min-width: 960px)',
   ]);
 
+  const onOpenDialog = (id: string | undefined) => {
+    if (!id) return;
+    setSelectedBook(id);
+  };
+
+  const onCloseDialog = () => {
+    setSelectedBook('');
+  };
+
   const RenderBooks = (books: BookProps[], start: number, end?: number): ReactJSXElement[] => {
     const booksJsx: ReactJSXElement[] = [];
     for (let i = start; i < books.length; i++) {
       booksJsx.push(
-        <Image
-          key={books[i].id}
-          boxSize="100%"
-          boxShadow="-6px 6px 10px -2px rgb(0 27 68 / 25%), 0 0 3px rgb(0 21 60 / 10%)"
-          objectFit="fill"
-          src={books[i].imageUrl}
-          alt={books[i].title}
-        />
+        <Box key={books[i].id}>
+          <Image
+            boxSize="100%"
+            boxShadow="-6px 6px 10px -2px rgb(0 27 68 / 25%), 0 0 3px rgb(0 21 60 / 10%)"
+            objectFit="fill"
+            src={books[i].imageUrl}
+            alt={books[i].title}
+            onClick={() => onOpenDialog(books[i].id)}
+          />
+          <AlertDialog
+            isOpen={books[i].id === selectedBook}
+            onClose={onCloseDialog}
+            leastDestructiveRef={undefined}
+          >
+            <AlertDialogOverlay>
+              <AlertDialogContent>
+                <AlertDialogBody>{books[i].title}</AlertDialogBody>
+                <AlertDialogFooter>
+                  <Button onClick={onCloseDialog}>閉じる</Button>
+                </AlertDialogFooter>
+              </AlertDialogContent>
+            </AlertDialogOverlay>
+          </AlertDialog>
+        </Box>
       );
       if (i === end) break;
     }
@@ -73,10 +110,10 @@ export default function HomePage({ books }: InferGetStaticPropsType<typeof getSt
     for (let i = 0; i < about.length; i++) {
       const prevCount = i * (cnt + 1);
       contentsJsx.push(
-        <>
+        <Box key={i}>
           <Books>{RenderBooks(books, prevCount, prevCount + cnt)}</Books>
           <About>{about[i]}</About>
-        </>
+        </Box>
       );
     }
     contentsJsx.push(<Books>{RenderBooks(books, (cnt + 1) * about.length)}</Books>);
