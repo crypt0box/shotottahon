@@ -4,13 +4,13 @@ import {
   Flex,
   Box,
   IconButton,
-  Button,
   useDisclosure,
   Drawer,
   DrawerOverlay,
   DrawerContent,
   DrawerHeader,
   DrawerBody,
+  Spacer,
 } from '@chakra-ui/react';
 import { ChevronLeftIcon } from '@chakra-ui/icons';
 
@@ -50,7 +50,6 @@ export function Layout({ children, ...props }: Props) {
         shadow="sm"
         py={4}
         px={8}
-        justifyContent="space-between"
       >
         <Box>
           <IconButton
@@ -62,14 +61,11 @@ export function Layout({ children, ...props }: Props) {
           />
         </Box>
         {RenderDrawer}
+        <Spacer />
         <Flex alignItems="center">
           <Heading>Shotottahon</Heading>
         </Flex>
-        <Box>
-          <Button disabled colorScheme="blue">
-            保存済み
-          </Button>
-        </Box>
+        <Spacer />
       </Flex>
       <Box width="100%" mt={'6rem'} {...props}>
         {children}
