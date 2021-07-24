@@ -1,8 +1,12 @@
+import React, { useState } from 'react';
 import { InferGetStaticPropsType } from 'next';
 import {
   Box,
+  Flex,
   Image,
   Button,
+  Icon,
+  Link,
   useMediaQuery,
   AlertDialog,
   AlertDialogOverlay,
@@ -10,7 +14,9 @@ import {
   AlertDialogBody,
   AlertDialogFooter,
 } from '@chakra-ui/react';
-import React, { useState } from 'react';
+import { ExternalLinkIcon } from '@chakra-ui/icons';
+import { AiFillBook, AiTwotoneTrophy } from 'react-icons/ai';
+import { BsPersonFill } from 'react-icons/bs';
 import { db } from 'src/lib/db';
 import { ReactJSXElement } from '@emotion/react/types/jsx-namespace';
 import About from 'src/components/About';
@@ -85,10 +91,54 @@ export default function HomePage({ books }: InferGetStaticPropsType<typeof getSt
           >
             <AlertDialogOverlay>
               <AlertDialogContent>
-                <AlertDialogBody>{books[i].title}</AlertDialogBody>
-                <AlertDialogFooter>
-                  <Button onClick={onCloseDialog}>閉じる</Button>
-                </AlertDialogFooter>
+                <AlertDialogBody>
+                  <Flex justifyContent="center">
+                    <Box>
+                      <Flex justifyContent="center">
+                        <Image
+                          maxW="180px"
+                          maxH="256px"
+                          mt="40px"
+                          mb="20px"
+                          boxShadow="-6px 6px 10px -2px rgb(0 27 68 / 25%), 0 0 3px rgb(0 21 60 / 10%)"
+                          boxSize="100%"
+                          objectFit="fill"
+                          src={books[i].imageUrl}
+                          alt={books[i].title}
+                        />
+                      </Flex>
+                      <Box my="5px">
+                        <Icon as={AiFillBook} mr="15px" />
+                        {books[i].title}
+                      </Box>
+                      <Box my="5px">
+                        <Icon as={BsPersonFill} mr="15px" />
+                        {books[i].author}
+                      </Box>
+                      <Box my="5px">
+                        <Icon as={AiTwotoneTrophy} mr="15px" />
+                        {books[i].reward}
+                      </Box>
+                      <Box mt="20px">
+                        <Link href={books[i].link} isExternal _hover={{ textDecoration: 'none' }}>
+                          <Button
+                            leftIcon={<ExternalLinkIcon />}
+                            w="100%"
+                            color="white"
+                            colorScheme="red"
+                          >
+                            楽天でレビューをみる
+                          </Button>
+                        </Link>
+                      </Box>
+                      <Box mt="10px" mb="20px">
+                        <Button w="100%" onClick={onCloseDialog}>
+                          閉じる
+                        </Button>
+                      </Box>
+                    </Box>
+                  </Flex>
+                </AlertDialogBody>
               </AlertDialogContent>
             </AlertDialogOverlay>
           </AlertDialog>
