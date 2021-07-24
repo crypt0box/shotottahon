@@ -98,7 +98,7 @@ export default function HomePage({ books }: InferGetStaticPropsType<typeof getSt
             leastDestructiveRef={undefined}
           >
             <AlertDialogOverlay>
-              <AlertDialogContent>
+              <AlertDialogContent mt="20px">
                 <AlertDialogBody>
                   <Flex justifyContent="center">
                     <Box>
@@ -160,7 +160,7 @@ export default function HomePage({ books }: InferGetStaticPropsType<typeof getSt
   const about: string[] = [
     'shotottahonは何かしらの賞を獲ったことがある本をひたすら並べたサイトです',
     'あなたが手に取ったその本はこの世界の誰かが強く評価した本です',
-    '読書をしたいけど何を読めばいいかわからない\nそんな人の為に作りました',
+    '読書をしたいけど何を読めばいいかわからない\nそんな人の読書への入り口になれば幸いです',
   ];
 
   const RenderContents = (cnt: number) => {
