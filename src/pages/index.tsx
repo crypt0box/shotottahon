@@ -12,7 +12,6 @@ import {
   AlertDialogOverlay,
   AlertDialogContent,
   AlertDialogBody,
-  AlertDialogFooter,
 } from '@chakra-ui/react';
 import { ExternalLinkIcon } from '@chakra-ui/icons';
 import { AiFillBook, AiTwotoneTrophy } from 'react-icons/ai';
@@ -31,6 +30,14 @@ type BookProps = {
   reward?: string;
 };
 
+const shuffle = ([...array]) => {
+  for (let i = array.length - 1; i >= 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [array[i], array[j]] = [array[j], array[i]];
+  }
+  return array;
+}
+
 export const getStaticProps = async () => {
   let books: BookProps[] = [];
   const bookRef = await db.collection('books').get();
@@ -45,14 +52,15 @@ export const getStaticProps = async () => {
     };
     books = [data, ...books];
   });
+  const shuffledBooks: BookProps[] = shuffle(books);
   return {
     props: {
-      books,
+      shuffledBooks,
     },
   };
 };
 
-export default function HomePage({ books }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function HomePage({ shuffledBooks }: InferGetStaticPropsType<typeof getStaticProps>) {
   const [selectedBook, setSelectedBook] = useState<string>('');
 
   const [isBase, isSm, isMd, isLg] = useMediaQuery([
@@ -75,7 +83,7 @@ export default function HomePage({ books }: InferGetStaticPropsType<typeof getSt
     const booksJsx: ReactJSXElement[] = [];
     for (let i = start; i < books.length; i++) {
       booksJsx.push(
-        <Box key={books[i].id}>
+        <Box key={books[i].id} cursor="pointer">
           <Image
             boxSize="100%"
             boxShadow="-6px 6px 10px -2px rgb(0 27 68 / 25%), 0 0 3px rgb(0 21 60 / 10%)"
@@ -127,7 +135,7 @@ export default function HomePage({ books }: InferGetStaticPropsType<typeof getSt
                             color="white"
                             colorScheme="red"
                           >
-                            楽天でレビューをみる
+                            楽天で詳細をみる
                           </Button>
                         </Link>
                       </Box>
@@ -161,12 +169,12 @@ export default function HomePage({ books }: InferGetStaticPropsType<typeof getSt
       const prevCount = i * (cnt + 1);
       contentsJsx.push(
         <Box key={i}>
-          <Books>{RenderBooks(books, prevCount, prevCount + cnt)}</Books>
+          <Books>{RenderBooks(shuffledBooks, prevCount, prevCount + cnt)}</Books>
           <About>{about[i]}</About>
         </Box>
       );
     }
-    contentsJsx.push(<Books>{RenderBooks(books, (cnt + 1) * about.length)}</Books>);
+    contentsJsx.push(<Books>{RenderBooks(shuffledBooks, (cnt + 1) * about.length)}</Books>);
     return contentsJsx;
   };
 
