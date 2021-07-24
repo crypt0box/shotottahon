@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { InferGetStaticPropsType } from 'next';
 import {
   Box,
@@ -36,7 +36,7 @@ const shuffle = ([...array]) => {
     [array[i], array[j]] = [array[j], array[i]];
   }
   return array;
-}
+};
 
 export const getStaticProps = async () => {
   let books: BookProps[] = [];
@@ -52,16 +52,16 @@ export const getStaticProps = async () => {
     };
     books = [data, ...books];
   });
-  const shuffledBooks: BookProps[] = shuffle(books);
   return {
     props: {
-      shuffledBooks,
+      books,
     },
   };
 };
 
-export default function HomePage({ shuffledBooks }: InferGetStaticPropsType<typeof getStaticProps>) {
+export default function HomePage({ books }: InferGetStaticPropsType<typeof getStaticProps>) {
   const [selectedBook, setSelectedBook] = useState<string>('');
+  const [bookList, setBookList] = useState<BookProps[]>(books);
 
   const [isBase, isSm, isMd, isLg] = useMediaQuery([
     '(min-width: 0px)',
@@ -169,14 +169,19 @@ export default function HomePage({ shuffledBooks }: InferGetStaticPropsType<type
       const prevCount = i * (cnt + 1);
       contentsJsx.push(
         <Box key={i}>
-          <Books>{RenderBooks(shuffledBooks, prevCount, prevCount + cnt)}</Books>
+          <Books>{RenderBooks(bookList, prevCount, prevCount + cnt)}</Books>
           <About>{about[i]}</About>
         </Box>
       );
     }
-    contentsJsx.push(<Books>{RenderBooks(shuffledBooks, (cnt + 1) * about.length)}</Books>);
+    contentsJsx.push(<Books>{RenderBooks(bookList, (cnt + 1) * about.length)}</Books>);
     return contentsJsx;
   };
+
+  useEffect(() => {
+    const shuffledBooks: BookProps[] = shuffle(bookList);
+    setBookList(shuffledBooks);
+  }, []);
 
   return (
     <>
