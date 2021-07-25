@@ -96,9 +96,11 @@ export default function HomePage({ books }: InferGetStaticPropsType<typeof getSt
             isOpen={books[i].id === selectedBook}
             onClose={onCloseDialog}
             leastDestructiveRef={undefined}
+            autoFocus={false}
+            isCentered
           >
             <AlertDialogOverlay>
-              <AlertDialogContent mt="20px">
+              <AlertDialogContent>
                 <AlertDialogBody>
                   <Flex justifyContent="center">
                     <Box>
