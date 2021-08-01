@@ -3,6 +3,7 @@ import {
   Heading,
   Flex,
   Box,
+  Link,
   IconButton,
   useDisclosure,
   Drawer,
@@ -30,11 +31,14 @@ export function Layout({ children, ...props }: Props) {
     <Drawer placement={'left'} onClose={onClose} isOpen={isOpen}>
       <DrawerOverlay />
       <DrawerContent>
-        <DrawerHeader borderBottomWidth="1px">Basic Drawer</DrawerHeader>
+        <DrawerHeader borderBottomWidth="1px">Shotottahon</DrawerHeader>
         <DrawerBody>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
-          <p>Some contents...</p>
+          <Box>
+            <Link href="/">ホーム</Link>
+          </Box>
+          <Box>
+            <Link href="/akutagawa">芥川賞</Link>
+          </Box>
         </DrawerBody>
       </DrawerContent>
     </Drawer>
@@ -42,15 +46,7 @@ export function Layout({ children, ...props }: Props) {
 
   return (
     <Flex bg="gray.100" w="100vw">
-      <Flex
-        as="header"
-        position="fixed"
-        top={0}
-        width="full"
-        shadow="sm"
-        py={4}
-        px={8}
-      >
+      <Flex as="header" position="fixed" top={0} width="full" shadow="sm" py={4} px={8}>
         <Box>
           <IconButton
             aria-label="back"
