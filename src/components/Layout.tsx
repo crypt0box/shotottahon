@@ -1,9 +1,10 @@
 import React, { ReactNode } from 'react';
+import { useRouter } from 'next/router';
 import {
   Heading,
   Flex,
   Box,
-  Link,
+  HStack,
   IconButton,
   useDisclosure,
   Drawer,
@@ -12,8 +13,13 @@ import {
   DrawerHeader,
   DrawerBody,
   Spacer,
+  Divider,
+  Link,
 } from '@chakra-ui/react';
 import { ChevronLeftIcon } from '@chakra-ui/icons';
+import { AiOutlineBook, AiOutlineHome } from 'react-icons/ai';
+import { BiPen } from 'react-icons/bi';
+import DrawerLink from './DrawerLink';
 
 type Props = {
   /**
@@ -25,19 +31,49 @@ type Props = {
 };
 
 export function Layout({ children, ...props }: Props) {
+  const router = useRouter();
   const { isOpen, onOpen, onClose } = useDisclosure();
 
   const RenderDrawer = (
     <Drawer placement={'left'} onClose={onClose} isOpen={isOpen}>
       <DrawerOverlay />
       <DrawerContent>
-        <DrawerHeader borderBottomWidth="1px">Shotottahon</DrawerHeader>
-        <DrawerBody>
-          <Box>
-            <Link href="/">ホーム</Link>
-          </Box>
-          <Box>
-            <Link href="/akutagawa">芥川賞</Link>
+        <DrawerHeader borderBottomWidth="1px">
+          <HStack>
+            <Box fontSize="28px">Shotottahon</Box>
+            <AiOutlineBook size="28px" />
+          </HStack>
+        </DrawerHeader>
+        <DrawerBody p={0} autoFocus={false}>
+          <DrawerLink href="/">
+            <Flex ml="15px">
+              <Box
+                as={AiOutlineHome}
+                size="24px"
+                color={router.pathname === '/' ? 'red.300' : undefined}
+              />
+              <Box ml="20px" fontSize="18px">
+                ホーム
+              </Box>
+            </Flex>
+          </DrawerLink>
+          <DrawerLink href="/akutagawa">
+            <Flex ml="15px">
+              <Box
+                as={BiPen}
+                size="24px"
+                color={router.pathname === '/akutagawa' ? 'red.300' : undefined}
+              />
+              <Box ml="20px" fontSize="18px">
+                芥川賞
+              </Box>
+            </Flex>
+          </DrawerLink>
+          <Divider orientation="horizontal" />
+          <Box p="25px">
+            <Link href="https://twitter.com/cryptooooon" color="blue" isExternal>
+              @Twitter
+            </Link>
           </Box>
         </DrawerBody>
       </DrawerContent>
