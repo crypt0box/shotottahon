@@ -105,11 +105,9 @@ export function Layout({ children, ...props }: Props) {
           />
         </Box>
         {RenderDrawer}
-        <Spacer />
-        <Flex alignItems="center">
-          <Heading>Shotottahon</Heading>
-        </Flex>
-        <Spacer />
+      </Flex>
+      <Flex justifyContent="center" position="fixed" top={0} width="full" py={4}>
+        <Heading>Shotottahon</Heading>
       </Flex>
       <Box width="100%" mt={'6rem'} {...props}>
         {children}
