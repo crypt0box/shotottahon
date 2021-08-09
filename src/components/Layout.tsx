@@ -18,7 +18,7 @@ import {
 } from '@chakra-ui/react';
 import { ChevronLeftIcon } from '@chakra-ui/icons';
 import { AiOutlineBook, AiOutlineHome } from 'react-icons/ai';
-import { BiPen } from 'react-icons/bi';
+import { BiPen, BiShoppingBag } from 'react-icons/bi';
 import DrawerLink from './DrawerLink';
 
 type Props = {
@@ -66,6 +66,18 @@ export function Layout({ children, ...props }: Props) {
               />
               <Box ml="20px" fontSize="18px">
                 芥川賞
+              </Box>
+            </Flex>
+          </DrawerLink>
+          <DrawerLink href="/honya">
+            <Flex ml="15px">
+              <Box
+                as={BiShoppingBag}
+                size="24px"
+                color={router.pathname === '/honya' ? 'red.300' : undefined}
+              />
+              <Box ml="20px" fontSize="18px">
+                本屋大賞
               </Box>
             </Flex>
           </DrawerLink>
