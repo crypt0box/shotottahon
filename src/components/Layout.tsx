@@ -94,7 +94,7 @@ export function Layout({ children, ...props }: Props) {
 
   return (
     <Flex bg="gray.100" w="100vw">
-      <Flex as="header" position="fixed" top={0} width="full" shadow="sm" py={4} px={8}>
+      <Flex as="header" position="fixed" top={0} width="full" shadow="sm" py={4} px={8} zIndex="999">
         <Box>
           <IconButton
             aria-label="back"
