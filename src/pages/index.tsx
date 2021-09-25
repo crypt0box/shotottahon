@@ -162,7 +162,7 @@ export default function HomePage({ books }: InferGetStaticPropsType<typeof getSt
   const about: string[] = [
     'shotottahonは何かしらの賞を獲ったことがある本をひたすら並べたサイトです',
     'あなたが手に取ったその本はこの世界の誰かが強く評価した本です',
-    '読書をしたいけど何を読めばいいかわからない\nそんな人の読書への入り口になれば幸いです',
+    '読書をしたいけど何を読めばいいかわからない\nそんなときに使ってみてください',
   ];
 
   const RenderContents = (cnt: number) => {
