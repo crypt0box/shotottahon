@@ -19,6 +19,7 @@ import {
 import { ChevronLeftIcon } from '@chakra-ui/icons';
 import { AiOutlineBook, AiOutlineHome } from 'react-icons/ai';
 import { BiPen, BiShoppingBag } from 'react-icons/bi';
+import { GiLoveMystery } from 'react-icons/gi';
 import DrawerLink from './DrawerLink';
 
 type Props = {
@@ -78,6 +79,18 @@ export function Layout({ children, ...props }: Props) {
               />
               <Box ml="20px" fontSize="18px">
                 本屋大賞
+              </Box>
+            </Flex>
+          </DrawerLink>
+          <DrawerLink href="/mephisto">
+            <Flex ml="15px">
+              <Box
+                as={GiLoveMystery}
+                size="24px"
+                color={router.pathname === '/mephisto' ? 'red.300' : undefined}
+              />
+              <Box ml="20px" fontSize="18px">
+                メフィスト賞
               </Box>
             </Flex>
           </DrawerLink>
