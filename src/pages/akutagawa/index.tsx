@@ -55,6 +55,8 @@ export default function Akutagawa({ books }: InferGetStaticPropsType<typeof getS
         {books.map((book) => (
           <Box key={book.id} cursor="pointer">
             <Image
+              maxW="180px"
+              maxH="256px"
               boxSize="100%"
               boxShadow="-6px 6px 10px -2px rgb(0 27 68 / 25%), 0 0 3px rgb(0 21 60 / 10%)"
               objectFit="fill"
