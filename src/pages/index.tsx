@@ -62,6 +62,7 @@ export const getStaticProps = async () => {
 export default function HomePage({ books }: InferGetStaticPropsType<typeof getStaticProps>) {
   const [selectedBook, setSelectedBook] = useState<string>('');
   const [bookList, setBookList] = useState<BookProps[]>(books);
+  const [numberOfRenderBooks, setNumberOfRenderBooks] = useState<number>(30);
 
   const [isBase, isSm, isMd, isLg] = useMediaQuery([
     '(min-width: 0px)',
@@ -81,7 +82,7 @@ export default function HomePage({ books }: InferGetStaticPropsType<typeof getSt
 
   const RenderBooks = (books: BookProps[], start: number, end?: number): ReactJSXElement[] => {
     const booksJsx: ReactJSXElement[] = [];
-    for (let i = start; i < books.length; i++) {
+    for (let i = start; i < Math.min(books.length, numberOfRenderBooks); i++) {
       booksJsx.push(
         <Box key={books[i].id} cursor="pointer">
           <Image
@@ -182,10 +183,27 @@ export default function HomePage({ books }: InferGetStaticPropsType<typeof getSt
     return contentsJsx;
   };
 
+  const handleScroll = () => {
+    // ページ最下部までスクロールしたら
+    if (
+      document.documentElement.scrollTop + window.innerHeight ===
+      document.documentElement.offsetHeight
+    ) {
+      setNumberOfRenderBooks((prevValue) => prevValue + 10);
+    }
+  };
+
   useEffect(() => {
     const shuffledBooks: BookProps[] = shuffle(bookList);
     setBookList(shuffledBooks);
   }, []);
+
+  useEffect(() => {
+    window.addEventListener('scroll', handleScroll);
+    return () => {
+      window.removeEventListener('scroll', handleScroll)
+    }
+  });
 
   return (
     <>
