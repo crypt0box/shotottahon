@@ -12,7 +12,7 @@ import {
   DrawerContent,
   DrawerHeader,
   DrawerBody,
-  Spacer,
+  Text,
   Divider,
   Link,
 } from '@chakra-ui/react';
@@ -95,11 +95,12 @@ export function Layout({ children, ...props }: Props) {
             </Flex>
           </DrawerLink>
           <Divider orientation="horizontal" />
-          <Box p="25px">
+          <Flex p="25px">
+            <Text mr="10px" fontWeight="bold">Created by</Text>
             <Link href="https://twitter.com/cryptooooon" color="blue" isExternal>
-              @Twitter
+              @cryptbox
             </Link>
-          </Box>
+          </Flex>
         </DrawerBody>
       </DrawerContent>
     </Drawer>
@@ -120,7 +121,7 @@ export function Layout({ children, ...props }: Props) {
         {RenderDrawer}
       </Flex>
       <Flex justifyContent="center" position="fixed" top={0} width="full" py={4}>
-        <Heading>Shotottahon</Heading>
+        <Heading>Shotottahon.com</Heading>
       </Flex>
       <Box width="100%" mt={'6rem'} {...props}>
         {children}
