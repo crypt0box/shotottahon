@@ -7,6 +7,7 @@ import {
   Button,
   Icon,
   Link,
+  SlideFade,
   useMediaQuery,
   AlertDialog,
   AlertDialogOverlay,
@@ -84,78 +85,80 @@ export default function HomePage({ books }: InferGetStaticPropsType<typeof getSt
     const booksJsx: ReactJSXElement[] = [];
     for (let i = start; i < Math.min(books.length, numberOfRenderBooks); i++) {
       booksJsx.push(
-        <Box key={books[i].id} cursor="pointer">
-          <Image
-            maxW="180px"
-            maxH="256px"
-            boxSize="100%"
-            boxShadow="-6px 6px 10px -2px rgb(0 27 68 / 25%), 0 0 3px rgb(0 21 60 / 10%)"
-            objectFit="fill"
-            src={books[i].imageUrl}
-            alt={books[i].title}
-            onClick={() => onOpenDialog(books[i].id)}
-          />
-          <AlertDialog
-            isOpen={books[i].id === selectedBook}
-            onClose={onCloseDialog}
-            leastDestructiveRef={undefined}
-            autoFocus={false}
-            isCentered
-          >
-            <AlertDialogOverlay>
-              <AlertDialogContent>
-                <AlertDialogBody>
-                  <Flex justifyContent="center">
-                    <Box>
-                      <Flex justifyContent="center">
-                        <Image
-                          maxW="180px"
-                          maxH="256px"
-                          mt="40px"
-                          mb="20px"
-                          boxShadow="-6px 6px 10px -2px rgb(0 27 68 / 25%), 0 0 3px rgb(0 21 60 / 10%)"
-                          boxSize="100%"
-                          objectFit="fill"
-                          src={books[i].imageUrl}
-                          alt={books[i].title}
-                        />
-                      </Flex>
-                      <Box my="5px">
-                        <Icon as={AiFillBook} mr="15px" />
-                        {books[i].title}
-                      </Box>
-                      <Box my="5px">
-                        <Icon as={BsPersonFill} mr="15px" />
-                        {books[i].author}
-                      </Box>
-                      <Box my="5px">
-                        <Icon as={AiTwotoneTrophy} mr="15px" />
-                        {books[i].reward}
-                      </Box>
-                      <Box mt="20px">
-                        <Link href={books[i].link} isExternal _hover={{ textDecoration: 'none' }}>
-                          <Button
-                            leftIcon={<ExternalLinkIcon />}
-                            w="100%"
-                            color="white"
-                            colorScheme="red"
-                          >
-                            楽天で詳細をみる
+        <SlideFade in={true} offsetY="200px">
+          <Box key={books[i].id} cursor="pointer">
+            <Image
+              maxW="180px"
+              maxH="256px"
+              boxSize="100%"
+              boxShadow="-6px 6px 10px -2px rgb(0 27 68 / 25%), 0 0 3px rgb(0 21 60 / 10%)"
+              objectFit="fill"
+              src={books[i].imageUrl}
+              alt={books[i].title}
+              onClick={() => onOpenDialog(books[i].id)}
+            />
+            <AlertDialog
+              isOpen={books[i].id === selectedBook}
+              onClose={onCloseDialog}
+              leastDestructiveRef={undefined}
+              autoFocus={false}
+              isCentered
+            >
+              <AlertDialogOverlay>
+                <AlertDialogContent>
+                  <AlertDialogBody>
+                    <Flex justifyContent="center">
+                      <Box>
+                        <Flex justifyContent="center">
+                          <Image
+                            maxW="180px"
+                            maxH="256px"
+                            mt="40px"
+                            mb="20px"
+                            boxShadow="-6px 6px 10px -2px rgb(0 27 68 / 25%), 0 0 3px rgb(0 21 60 / 10%)"
+                            boxSize="100%"
+                            objectFit="fill"
+                            src={books[i].imageUrl}
+                            alt={books[i].title}
+                          />
+                        </Flex>
+                        <Box my="5px">
+                          <Icon as={AiFillBook} mr="15px" />
+                          {books[i].title}
+                        </Box>
+                        <Box my="5px">
+                          <Icon as={BsPersonFill} mr="15px" />
+                          {books[i].author}
+                        </Box>
+                        <Box my="5px">
+                          <Icon as={AiTwotoneTrophy} mr="15px" />
+                          {books[i].reward}
+                        </Box>
+                        <Box mt="20px">
+                          <Link href={books[i].link} isExternal _hover={{ textDecoration: 'none' }}>
+                            <Button
+                              leftIcon={<ExternalLinkIcon />}
+                              w="100%"
+                              color="white"
+                              colorScheme="red"
+                            >
+                              楽天で詳細をみる
+                            </Button>
+                          </Link>
+                        </Box>
+                        <Box mt="10px" mb="20px">
+                          <Button w="100%" onClick={onCloseDialog}>
+                            閉じる
                           </Button>
-                        </Link>
+                        </Box>
                       </Box>
-                      <Box mt="10px" mb="20px">
-                        <Button w="100%" onClick={onCloseDialog}>
-                          閉じる
-                        </Button>
-                      </Box>
-                    </Box>
-                  </Flex>
-                </AlertDialogBody>
-              </AlertDialogContent>
-            </AlertDialogOverlay>
-          </AlertDialog>
-        </Box>
+                    </Flex>
+                  </AlertDialogBody>
+                </AlertDialogContent>
+              </AlertDialogOverlay>
+            </AlertDialog>
+          </Box>
+        </SlideFade>
       );
       if (i === end) break;
     }
@@ -201,8 +204,8 @@ export default function HomePage({ books }: InferGetStaticPropsType<typeof getSt
   useEffect(() => {
     window.addEventListener('scroll', handleScroll);
     return () => {
-      window.removeEventListener('scroll', handleScroll)
-    }
+      window.removeEventListener('scroll', handleScroll);
+    };
   });
 
   return (
