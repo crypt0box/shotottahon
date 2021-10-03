@@ -120,8 +120,8 @@ export function Layout({ children, ...props }: Props) {
         </Box>
         {RenderDrawer}
       </Flex>
-      <Flex justifyContent="center" position="fixed" top={0} width="full" py={4}>
-        <Heading>Shotottahon.com</Heading>
+      <Flex justifyContent="center" alignItems="center" position="fixed" top={0} width="full" height="72px" py={4}>
+        <Heading fontSize={{ base: '22px', md: "40px", lg: "48px" }}>Shotottahon.com</Heading>
       </Flex>
       <Box width="100%" mt={'6rem'} {...props}>
         {children}
