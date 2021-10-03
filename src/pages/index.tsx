@@ -87,7 +87,7 @@ export default function HomePage({ books }: InferGetStaticPropsType<typeof getSt
       booksJsx.push(
         <SlideFade in={true} offsetY="200px">
           <Box key={books[i].id} cursor="pointer">
-            <Box h={isBase ? "220px" : "256px"}>
+            <Box w={isLg ? '180px' : '140px'} h={isLg ? '256px' : '220px'}>
               <Image
                 maxW="180px"
                 maxH="256px"
