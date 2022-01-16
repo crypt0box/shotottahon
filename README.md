@@ -12,5 +12,11 @@ https://shotottahon-dotcom.vercel.app/
 - ChakraUI
 - Vercel
 
+# 特徴
+- SSG
+- 無限スクロール
+- アニメーション
+- スクレイピング
+
 # Author
 [@cryptobox](https://twitter.com/cryptooooon)
