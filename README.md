@@ -13,4 +13,4 @@ https://shotottahon-dotcom.vercel.app/
 - Vercel
 
 # Author
-(@cryptobox)[https://twitter.com/cryptooooon]
+[@cryptobox](https://twitter.com/cryptooooon)
